@@ -1,0 +1,39 @@
+<mujoco model="really_simple_arm">
+    <default>
+        <geom type="mesh" xyaxes="1 0 0 0 0 1"/>
+    </default>
+
+    <!-- meshes -->
+    <asset>
+        <mesh name="base_link" content_type="mshess/stl" file="base_link.stl" />
+        <mesh name="a1_shoulder_base" content_type="meshes/stl" file="a1_shoulder_base.stl" />
+        <mesh name="a2_link_1" content_type="meshes/stl" file="a2_link_1.stl" />
+        <mesh name="a3_axis4_housing" content_type="meshes/stl" file="a3_axis4_housing.stl" />
+        <mesh name="a4_link2" content_type="meshes/stl" file="a4_link2.stl" />
+        <mesh name="a5_internal_upright" content_type="meshes/stl" file="a5_internal_upright.stl" />
+        <mesh name="a6_EE_holder" content_type="meshes/stl" file="a6_EE_holder.stl" />
+    </asset>
+
+    <worldbody>
+        <body name="root">
+            <geom mesh="base_link"/>
+
+            <body name="a1_shoulder_base">
+                <geom mesh="link1"/>
+                <body name="link2">
+                    <geom mesh="link2"/>
+                </body>
+            </body>
+        </body>
+    </worldbody>
+
+    <!-- Links -->
+    <actuator>
+        <motor name="shoulder_joint" joint="shoulder_joint" ctrllimited="true" ctrlrange="-1 1" gear="1" />
+        <motor name="link_1_joint" joint="link_1_joint" ctrllimited="true" ctrlrange="-1 1" gear="1" />
+        <motor name="link1_link2" joint="link1_link2" ctrllimited="true" ctrlrange="-1 1" gear="1" />
+        <motor name="a4_rotation" joint="a4_rotation" ctrllimited="true" ctrlrange="-1 1" gear="1" />
+        <motor name="a5_rotation" joint="a5_rotation" ctrllimited="true" ctrlrange="-1 1" gear="1" />
+        <motor name="a6_rotation" joint="a6_rotation" ctrllimited="true" ctrlrange="-1 1" gear="1" />
+    </actuator>
+</mujoco>
