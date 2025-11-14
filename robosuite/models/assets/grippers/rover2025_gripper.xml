@@ -1,0 +1,91 @@
+<!-- DO NOT EDIT -->
+<mujoco model="rover2025_gripper_model">
+    <default>
+        <joint limited="false" damping="0.01" armature="0.01" frictionloss="0.01" />
+        <geom condim="4" contype="1" conaffinity="1" />
+
+        <default class="prismatic"> 
+            <joint type="slide" />
+        </default>
+
+        <default class="collision">
+            <geom group="0" rgba="0.7 0.7 0.7 1" type="mesh" />
+        </default>
+        
+        <default class="visual">
+            <geom group="1" material="default_material" type="mesh" />
+        </default>
+    </default>
+    
+    <!-- compiler set to radians and use rpy with euler -->
+    <compiler angle="radian" eulerseq="xyz"/>
+
+    <!-- mesh names -->
+    <asset>
+        <material name="default_visual" rgba="0.7 0.7 0.7 1"/>
+        <material name="default_material" rgba="0.7 0.7 0.7 1"/>
+
+        <mesh name="base_ee" file="meshes/rover2025_gripper/Base-EE.stl" />
+        <mesh name="gripper1" file="meshes/rover2025_gripper/Gripper-1.stl" />
+        <mesh name="gripper2" file="meshes/rover2025_gripper/Gripper-2.stl" />
+    </asset>
+
+    <tendon>
+        <fixed name="gripper_coupling">
+            <joint joint="gripper1_joint" coef="1"/>
+            <joint joint="gripper2_joint" coef="-1"/>
+        </fixed>
+    </tendon>
+
+    <!-- actuator torques -->
+    <actuator>
+        <motor name="grip_motor" joint="gripper1_joint" gear="1" />
+    </actuator>
+
+    <worldbody>
+        <body name="base_ee" pos="0 0 0" euler="0 0 0">
+            <!-- Sensor placeholder -->
+            <site name="ft_frame" pos="0 0 0" size="0.01 0.01 0.01" rgba="1 0 0 1" type="sphere" group="1" />
+            <!-- This site was added for visualization. -->
+            <body name="eef" pos="0 0 0.145" quat="0.707105 0 0 -0.707105">
+                <site name="grip_site" pos="0 0 0" size="0.01 0.01 0.01" rgba="1 0 0 0.5" type="sphere" group="1"/>
+                <site name="ee_x" pos="0.1 0 0" size="0.005 .1"  quat="0.707105  0 0.707108 0 " rgba="1 0 0 0" type="cylinder" group="1"/>
+                <site name="ee_y" pos="0 0.1 0" size="0.005 .1" quat="0.707105 0.707108 0 0" rgba="0 1 0 0" type="cylinder" group="1"/>
+                <site name="ee_z" pos="0 0 0.1" size="0.005 .1" quat="1 0 0 0" rgba="0 0 1 0" type="cylinder" group="1"/>
+                <!-- This site was added for visualization. -->
+                <site name="grip_site_cylinder" pos="0 0 0" size="0.005 10" rgba="0 1 0 0.3" type="cylinder" group="1"/>
+            </body>
+            <geom class="collision" mesh="base_ee"/>
+            <geom class="visual" mesh="base_ee"/>
+            <inertial
+                pos="-0.0011063785182417 0.000415259727448674 -0.0398049819853404"
+                mass="0.628367460355529"
+                diaginertia="0.000340294819855205 0.000313942030327772 0.000481162425041832"/>
+
+            <body name="gripper1" pos="0 0 0" quat="1 0 0 0">
+                <joint name="gripper1_joint" class="prismatic" axis="0 1 0" range="-0.2 0.2" />
+                <geom class="collision" mesh="gripper1" />
+                <geom class="visual" mesh="gripper1"/>
+                <inertial
+                    pos="0.010088 -0.046782 0.08035"
+                    mass="0.59189"
+                    diaginertia="0.0016698 0.00035722 0.0015228"/>
+            </body>
+            <body name="gripper2" pos="0 0 0" quat="1 0 0 0">
+                <joint name="gripper2_joint" class="prismatic" axis="0 1 0" range="-0.2 0.2" />
+                <geom class="collision" mesh="gripper2" />
+                <geom class="visual" mesh="gripper2"/>
+                <inertial
+                    pos="0.010088 -0.046782 0.08035"
+                    mass="0.59189"
+                    diaginertia="0.0016698 0.00035722 0.0015228"/>
+            </body>
+        </body>
+    </worldbody>
+
+    <sensor>
+        <force name="force_ee" site="ft_frame"/>
+        <torque name="torque_ee" site="ft_frame"/>
+    </sensor>
+
+</mujoco>

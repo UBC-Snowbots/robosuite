@@ -23,7 +23,7 @@ class Rover2025(ManipulatorModel):
 
     @property
     def default_gripper(self):
-        return {"right": "Robotiq85Gripper"}
+        return {"right": "Rover2025Gripper"}
 
     @property
     def default_controller_config(self):
