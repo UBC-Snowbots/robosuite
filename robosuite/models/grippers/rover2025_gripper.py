@@ -14,11 +14,14 @@ class Rover2025GripperBase(GripperModel):
 
     @property
     def init_qpos(self):
-        return np.array([0.0, 0.0])
+        return np.array([0.0])
 
     @property
     def _important_geoms(self):
-        return {}
+        return {
+            "left_fingerpad": ["gripper1"],
+            "right_fingerpad": ["gripper2"],
+        }
 
 
 class Rover2025Gripper(Rover2025GripperBase):
