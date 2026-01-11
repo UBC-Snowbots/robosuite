@@ -18,7 +18,14 @@ class Rover2025GripperBase(GripperModel):
 
     @property
     def _important_geoms(self):
-        return {}
+        # Return raw XML geom names (not name-adjusted with prefix).
+        # Match the geoms we defined in rover2025_gripper.xml.
+        return {
+            "left_finger": ["gripper1"],
+            "right_finger": ["gripper2"],
+            "left_fingerpad": ["left_fingerpad"],
+            "right_fingerpad": ["right_fingerpad"],
+        }
 
 
 class Rover2025Gripper(Rover2025GripperBase):

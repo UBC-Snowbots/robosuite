@@ -53,7 +53,7 @@
             />
             <body name="gripper1" pos="0 0 0" quat="1 0 0 0">
                 <joint name="gripper1_joint" class="prismatic" axis="0 1 0" range="-0.2 0.2" />
-                <geom class="collision" mesh="gripper1" />
+                <geom name="left_fingerpad" class="collision" mesh="gripper1" />
                 <geom class="visual" mesh="gripper1" />
                 
             <inertial
@@ -64,7 +64,7 @@
                 </body>
             <body name="gripper2" pos="0 0 0" quat="1 0 0 0">
                 <joint name="gripper2_joint" class="prismatic" axis="0 1 0" range="-0.2 0.2" />
-                <geom class="collision" mesh="gripper2" />
+                <geom name="right_fingerpad" class="collision" mesh="gripper2" />
                 <geom class="visual" mesh="gripper2" />
                 
             <inertial
