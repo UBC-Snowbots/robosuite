@@ -29,17 +29,27 @@ class Rover2025(ManipulatorModel):
     def default_controller_config(self):
         return {"right": "default_rover2025"}
 
+    # @property
+    # def init_qpos(self):
+    #     return np.array([
+    #         1.57,   # shoulder_joint
+    #         -1.57,  # link_1_joint
+    #         1.57,   # link1_link2
+    #         0.0,    # a4_rotation
+    #         0.0,    # a5_rotation
+    #         0.0     # a6_rotation (fixed)
+    #     ])
+    
     @property
     def init_qpos(self):
         return np.array([
-            1.57,   # shoulder_joint
-            -1.57,  # link_1_joint
-            1.57,   # link1_link2
-            0.0,    # a4_rotation
-            0.0,    # a5_rotation
-            0.0     # a6_rotation (fixed)
+            0.0,    # shoulder - Face forward
+            -0.5,   # link 1 - Leaning slightly back/up
+            1.57,   # link 2 - Angled
+            0.0,    # a4
+            0.0,    # a5
+            0.0     # a6
         ])
-
 
     @property
     def base_xpos_offset(self):

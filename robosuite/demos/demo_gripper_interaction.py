@@ -12,7 +12,8 @@ import xml.etree.ElementTree as ET
 
 from robosuite.models import MujocoWorldBase
 from robosuite.models.arenas.table_arena import TableArena
-from robosuite.models.grippers import PandaGripper, RethinkGripper
+# from robosuite.models.grippers import PandaGripper, RethinkGripper
+from robosuite.models.grippers import Rover2025Gripper
 from robosuite.models.objects import BoxObject
 from robosuite.renderers.viewer import OpenCVViewer
 from robosuite.utils.binding_utils import MjRenderContextOffscreen, MjSim
@@ -28,7 +29,7 @@ if __name__ == "__main__":
     world.merge(arena)
 
     # add a gripper
-    gripper = RethinkGripper()
+    gripper = Rover2025Gripper()
     # Create another body with a slider joint to which we'll add this gripper
     gripper_body = ET.Element("body", name="gripper_base")
     gripper_body.set("pos", "0 0 1.3")

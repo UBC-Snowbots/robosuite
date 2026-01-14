@@ -31,7 +31,7 @@ class Rover2025GripperBase(GripperModel):
 class Rover2025Gripper(Rover2025GripperBase):
     def format_action(self, action):
         assert len(action) == 1
-        return np.array([action[0]])
+        return np.array([action[0], action[0]])
 
     @property
     def speed(self):
