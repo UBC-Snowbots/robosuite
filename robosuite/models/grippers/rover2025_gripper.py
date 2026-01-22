@@ -40,3 +40,12 @@ class Rover2025Gripper(Rover2025GripperBase):
     @property
     def dof(self):
         return 1
+
+    # Testing
+    @property
+    def grasp_qpos(self):
+        # Just return the target for the 'virtual' single DOF
+        return {
+            1: np.array([0.8]), 
+            -1: np.array([-0.8])
+        }

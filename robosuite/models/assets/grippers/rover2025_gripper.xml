@@ -1,11 +1,10 @@
 <mujoco model="rover2025_gripper_model">
     <default>
         <joint limited="false" damping="5.0" armature="0.1" frictionloss="0.1" />
-        <!-- collision mechanics -->
         <geom condim="4" contype="1" conaffinity="1" />
         
         <default class="prismatic">
-            <joint type="slide" />
+            <joint type="slide" limited="true" armature="0.05" damping="20" frictionloss="1.0" />
         </default>
         
         <default class="collision">
@@ -35,10 +34,8 @@
     </tendon>
 
     <actuator>
-        <!-- <position name="gripper_actuator" joint="gripper1_joint" kp="500" kv="50" ctrlrange="-1 1" />
-        <position name="gripper_actuator2" joint="gripper2_joint" kp="500" kv="50" ctrlrange="-1 1" /> -->
-        <velocity name="gripper_actuator1" joint="gripper1_joint" kv="200" ctrlrange="-1 1" forcerange="-50 50"/>
-        <velocity name="gripper_actuator2" joint="gripper2_joint" kv="200" ctrlrange="-1 1" forcerange="-50 50"/>
+        <position name="gripper_actuator1" joint="gripper1_joint" kp="400" kv="10" ctrlrange="-1 1" forcerange="-5 5"/>
+        <position name="gripper_actuator2" joint="gripper2_joint" kp="400" kv="10" ctrlrange="-1 1" forcerange="-5 5"/>
     </actuator>
 
     <worldbody>
@@ -63,8 +60,7 @@
             />
 
             <body name="gripper1" pos="0 0 0" quat="1 0 0 0">
-                <!-- Range must be -1 to 1 because gripper closes and opens -->
-                <joint name="gripper1_joint" class="prismatic" axis="0 -1 0" range="-0.5 0.1" damping="0"/>
+                <joint name="gripper1_joint" class="prismatic" axis="0 -1 0" range="-0.05 0.1" damping="10" armature="0.5"/>
                 
                 <geom name="left_fingerpad" class="collision" type="box" size="0.005 0.01 0.02" pos="0 -0.095 0.1"/>
 
@@ -78,7 +74,7 @@
             </body>
 
             <body name="gripper2" pos="0 0 0" quat="1 0 0 0">
-                <joint name="gripper2_joint" class="prismatic" axis="0 1 0" range="-0.5 0.1" damping="0" />
+                <joint name="gripper2_joint" class="prismatic" axis="0 1 0" range="-0.05 0.1" damping="10" armature="0.5" />
                 
                 <geom name="right_fingerpad" class="collision" type="box" size="0.005 0.01 0.02" pos="0 0.095 0.1"/>
 

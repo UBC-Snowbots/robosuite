@@ -127,7 +127,10 @@ class Device(metaclass=abc.ABCMeta):
         # Scale rotation for teleoperation (tuned for OSC) -- gains tuned for each device
         dpos, drotation = self._postprocess_device_outputs(dpos, drotation)
         # map 0 to -1 (open) and map 1 to 1 (closed)
-        grasp = 1 if grasp else -1
+
+        # aaron's modifications
+        grasp_key = 1 if grasp else -1
+        grasp_magnitude = 0.8 if grasp else -0.8
 
         ac_dict = {}
         # populate delta actions for the arms
@@ -174,10 +177,16 @@ class Device(metaclass=abc.ABCMeta):
         ac_dict[f"{active_arm}_abs"] = arm_action["abs"]
         ac_dict[f"{active_arm}_delta"] = arm_action["delta"]
 
+        # more of aaron's modifications
+        # if hasattr(gripper, "grasp_qpos"):
+        #     ac_dict[f"{active_arm}_gripper"] = getattr(gripper, "grasp_qpos")[grasp]
+        # else:
+        #     ac_dict[f"{active_arm}_gripper"] = np.array([grasp] * gripper_dof)
         if hasattr(gripper, "grasp_qpos"):
-            ac_dict[f"{active_arm}_gripper"] = getattr(gripper, "grasp_qpos")[grasp]
+            ac_dict[f"{active_arm}_gripper"] = getattr(gripper, "grasp_qpos")[grasp_key]
         else:
-            ac_dict[f"{active_arm}_gripper"] = np.array([grasp] * gripper_dof)
+            ac_dict[f"{active_arm}_gripper"] = np.array([grasp_magnitude])
+            #ac_dict[f"{active_arm}_gripper"] = np.array([grasp_magnitude] * gripper_dof)
 
         # clip actions between -1 and 1
         for (k, v) in ac_dict.items():
@@ -203,7 +212,7 @@ class Device(metaclass=abc.ABCMeta):
                 "delta": norm_delta,
                 "abs": abs_action,
             }
-        elif robot.composite_controller_config["type"] in ["WHOLE_BODY_MINK_IK", "HYBRID_WHOLE_BODY_MINK_IK"]:
+        elif robot.composite_controller_config["type"] in ["WHOLE_BODY_MINK_IK", "HYBRID_WHOLE_BODY_MINK_IK", "BASIC"]:
             ref_frame = self.env.robots[0].composite_controller.composite_controller_specific_config.get(
                 "ik_input_ref_frame", "world"
             )

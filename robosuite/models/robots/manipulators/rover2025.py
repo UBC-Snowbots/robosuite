@@ -70,3 +70,12 @@ class Rover2025(ManipulatorModel):
     @property
     def arm_type(self):
         return "single"
+
+    # testing
+    @property
+    def naming_prefix(self):
+        return "robot{}_".format(self.idn)
+
+    @property
+    def is_mobile(self):
+        return False  # Unless your rover base is currently modeled as a mobile base in Mujoco

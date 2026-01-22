@@ -21,7 +21,7 @@
                 "interpolation": null,
                 "ramp_ratio": 0.2,
                 "gripper": {
-                    "type": "GRIPPER",
+                    "type": "GRIP",
                     "input_max": 1,
                     "input_min": -1
                 }
