@@ -60,7 +60,7 @@
             />
 
             <body name="gripper1" pos="0 0 0" quat="1 0 0 0">
-                <joint name="gripper1_joint" class="prismatic" axis="0 -1 0" range="-0.05 0.1" damping="10" armature="0.5"/>
+                <joint name="gripper1_joint" class="prismatic" axis="0 -1 0" range="-0.1 0.1" damping="10" armature="0.5"/>
                 
                 <geom name="left_fingerpad" class="collision" type="box" size="0.005 0.01 0.02" pos="0 -0.095 0.1"/>
 
@@ -74,7 +74,7 @@
             </body>
 
             <body name="gripper2" pos="0 0 0" quat="1 0 0 0">
-                <joint name="gripper2_joint" class="prismatic" axis="0 1 0" range="-0.05 0.1" damping="10" armature="0.5" />
+                <joint name="gripper2_joint" class="prismatic" axis="0 1 0" range="-0.1 0.1" damping="10" armature="0.5" />
                 
                 <geom name="right_fingerpad" class="collision" type="box" size="0.005 0.01 0.02" pos="0 0.095 0.1"/>
 

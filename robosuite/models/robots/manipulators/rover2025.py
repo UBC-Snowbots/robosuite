@@ -16,6 +16,7 @@ class Rover2025(ManipulatorModel):
 
     def __init__(self, idn=0):
         super().__init__(xml_path_completion("robots/rover2025/robot.xml"), idn=idn)
+        self.set_joint_attribute(attrib="damping", values=np.array((0.1, 0.1, 0.1, 0.1, 0.1, 0.1)))
 
     @property
     def default_base(self):
@@ -43,12 +44,12 @@ class Rover2025(ManipulatorModel):
     @property
     def init_qpos(self):
         return np.array([
-            0.0,    # shoulder - Face forward
-            -0.5,   # link 1 - Leaning slightly back/up
-            1.57,   # link 2 - Angled
+            -1.5,    # shoulder - Face forward
+            -1.2,   # link 1 - Leaning slightly back/up
+            1.0,   # link 2 - Angled
             0.0,    # a4
-            0.0,    # a5
-            0.0     # a6
+            -1,    # a5
+            -1.5     # a6
         ])
 
     @property
@@ -61,7 +62,7 @@ class Rover2025(ManipulatorModel):
 
     @property
     def top_offset(self):
-        return np.array((0, 0, 1.0))
+        return np.array((0, 0, 1.5))
 
     @property
     def _horizontal_radius(self):
@@ -70,11 +71,6 @@ class Rover2025(ManipulatorModel):
     @property
     def arm_type(self):
         return "single"
-
-    # testing
-    @property
-    def naming_prefix(self):
-        return "robot{}_".format(self.idn)
 
     @property
     def is_mobile(self):
