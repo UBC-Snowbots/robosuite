@@ -94,7 +94,7 @@
 
                                     <body name="right_hand" pos="0.1 0 0" euler="0 1.57 0">
                                         <site name="right_hand" pos="0 0 0" size="0.01" rgba="1 0 0 1" group="1"/>
-                                        <camera name="eye_in_hand" pos="0 0 0.05" euler="0 0 0" fovy="75"/>
+                                        <camera name="eye_in_hand" pos="0 0 0.1" euler="0 3.14 0" fovy="75"/>
                                         <site name="right_center" pos="0 0 0" size="0.01" rgba="0 1 0 1" group="1"/>
                                         <site name="grip_site" pos="0 0 0" size="0.01" rgba="0 0 1 1" group="1"/>
                                         <site name="ee_center" pos="0 0 0" size="0.01" rgba="0 1 0 1" group="1"/>
