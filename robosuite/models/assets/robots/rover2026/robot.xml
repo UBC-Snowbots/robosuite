@@ -34,63 +34,63 @@
             <geom class="collision" mesh="base_link"/>
             <geom class="visual" mesh="base_link"/>
             <inertial
-                pos="0.102260898282908 0.00311121926014173 -0.156019155205669"
-                mass="0.464292173847851"
-                diaginertia="0.00212573605076349 0.003362906184637 0.00125814743738044"/>
+                pos="0.0803862782392977 0.138938324698901 0.00237750848221769"
+                mass="0.763817421365748"
+                diaginertia="0.00365550963890374 0.00157214217192498 0.00520465242815667"/>
 
-            <body name="a1_shoulder_base" pos="0.102 0.2 0.037" quat="-1 0 0 0">
+            <body name="a1_shoulder_base" pos="0.0875 0.17 0.0381" quat="-1 0 0 0">
                 <joint name="shoulder_joint" class="arm_joint" axis="0 0 1" range="-10 10" />
                 <geom class="collision" mesh="a1_shoulder_base" />
                 <geom class="visual" mesh="a1_shoulder_base"/>
                 <inertial
-                    pos="0.00378215343885442 -0.0301295143675391 0.0522485793592078"
-                    mass="0.742438926040346"
-                    diaginertia="0.000861455479041105 0.000501485086205416 0.000585891248389868"/>
+                    pos="0.00027861641831084 -0.0233439437845335 0.0413589730530282"
+                    mass="1.2159845169735"
+                    diaginertia="0.00146671121305877 0.000864137178979533 0.00108466557650932"/>
 
                 <body name="a2_link_1" pos="0.002825 -0.045 0.075" quat="0.5 0.5 -0.5 -0.5">
                     <joint name="link_1_joint" class="arm_joint" axis="0 0 1" range="-6.28 0" />
                     <geom class="collision" mesh="a2_link_1"/>
                     <geom class="visual" mesh="a2_link_1"/>
                     <inertial
-                        pos="-0.31663624842113 -1.47449210178979E-05 -0.00360815454079563"
-                        mass="1.94678380458644"
-                        diaginertia="0.00226107261095185 0.0391641475280286 0.0402810744771899"/>
+                        pos="-0.324316065490712 -8.82283367659165E-05 -0.00312305140232091"
+                        mass="2.37795713621316"
+                        diaginertia="0.00258780670386834 0.0394251082116644 0.0405572027877698"/>
 
-                    <body name="a3_axis4_housing" pos="-0.500 0 -0.0677" quat="0 0.7071 0 -0.7071">
+                    <body name="a3_axis4_housing" pos="-0.500 0 -0.063039642892861" quat="0 0.7071 0 -0.7071">
                         <joint name="link1_link2" class="arm_joint" axis="-1 0 0" range="-3.14 3.14"/>
                         <geom class="collision" mesh="a3_axis4_housing" />
                         <geom class="visual" mesh="a3_axis4_housing"/>
                         <inertial
-                            pos="0.0408050572850942 0.0166036738004918 0.013626708114375"
-                            mass="0.258864677478161"
-                            diaginertia="0.000586888644066693 0.000547794529378939 0.000485112811184976"/>
+                            pos="0.0466211562050391 0.00818126323673461 0.0161470492830732"
+                            mass="0.405543595440366"
+                            diaginertia="0.000697940268173563 0.000449834279179675 0.000430824953350791"/>
 
-                        <body name="a4_link2" pos="0.0451 0.205 0.2235" quat="0.658 -0.256 -0.658 0.256">
+                        <body name="a4_link2" pos="0.0497860905660309 0.148506406755493 0.186703382508224" quat="0.658 -0.256 -0.658 0.256">
                             <joint name="a4_rotation" class="arm_joint" axis="-1 0 0" range="-1.57 1.57" />
                             <geom class="collision" mesh="a4_link2"/>
                             <geom class="visual" mesh="a4_link2"/>
                             <inertial
-                                pos="0.136030828721491 0.000546842367514622 -4.51545797446572E-06"
-                                mass="1.31628289409256"
-                                diaginertia="0.00113403420981109 0.00735293656239522 0.00800857579951489"/>
+                                pos="0.0859436753269209 0.000520432616544109 -0.000231377005323458"
+                                mass="1.69468727862981"
+                                diaginertia="0.0014685385115831 0.00851214875637219 0.00918980958127426"/>
 
-                            <body name="a5_internal_upright" pos="0.3169 0 0.024" quat="0.658 0.256 0.658 -0.256">
+                            <body name="a5_internal_upright" pos="0.241736998075445 0 0.0240007334588877" quat="0.658 0.256 0.658 -0.256">
                                 <joint name="a5_rotation" class="arm_joint" axis="1 0 0" range="-3.14 3.14" />
                                 <geom class="collision" mesh="a5_internal_upright"/>
                                 <geom class="visual" mesh="a5_internal_upright"/>
                                 <inertial
-                                    pos="0.0267788794933879 0.00778879051640191 0.00761484691204106"
-                                    mass="0.155027470866593"
-                                    diaginertia="0.000136622337027725 0.000142526377187093 0.000139936433421289"/>
+                                    pos="0.0248892665074707 0.00880117848885809 0.00583694857701647"
+                                    mass="0.167323738643551"
+                                    diaginertia="0.000139240659778515 0.000151677157680944 0.000143582597351709"/>
 
-                                <body name="a6_EE_holder" pos="0.024 0.0319 0.0309" quat="0.650 -0.276 -0.650 0.276">
+                                <body name="a6_EE_holder" pos="0.0249999999999973 0.0872905492585429 0.0572248321024004" quat="0.650 -0.276 -0.650 0.276">
                                     <joint name="a6_rotation" type="hinge" axis="-1 0 0" limited="false" />
                                     <geom class="collision" mesh="a6_EE_holder"/>
                                     <geom class="visual" mesh="a6_EE_holder"/>
                                     <inertial
-                                        pos="0.0227263684366685 -2.15736821771728E-05 -1.75136141242378E-05"
-                                        mass="0.268420822776766"
-                                        diaginertia="0.000349666326455495 0.000202174421912639 0.000202694150421495"/>
+                                        pos="-0.0339647464842324 0.000122037593266067 0.000177794121861106"
+                                        mass="0.378687643103429"
+                                        diaginertia="0.000462382976687633 0.00029700747719619 0.000295719425696946"/>
 
                                     <body name="right_hand" pos="0.1 0 0" euler="0 1.57 0">
                                         <site name="right_hand" pos="0 0 0" size="0.01" rgba="1 0 0 1" group="1"/>
