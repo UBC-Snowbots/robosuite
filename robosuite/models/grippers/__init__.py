@@ -18,6 +18,7 @@ from .xarm7_gripper import XArm7Gripper
 
 # Rover additions
 from .rover2025_gripper import Rover2025Gripper
+from .rover2026_gripper import Rover2026Gripper
 
 GRIPPER_MAPPING = {
     "RethinkGripper": RethinkGripper,
@@ -36,6 +37,7 @@ GRIPPER_MAPPING = {
     "FourierRightHand": FourierRightHand,
     "XArm7Gripper": XArm7Gripper,
     "Rover2025Gripper": Rover2025Gripper, # addition
+    "Rover2026Gripper": Rover2026Gripper, # addition
     None: NullGripper,
 }
 

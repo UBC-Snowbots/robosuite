@@ -12,3 +12,4 @@ from .gr1_robot import GR1, GR1FixedLowerBody, GR1ArmsOnly, GR1FloatingBody
 from .xarm7_robot import XArm7
 
 from .rover2025 import Rover2025
+from .rover2026 import Rover2026
