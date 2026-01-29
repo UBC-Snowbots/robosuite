@@ -43,9 +43,9 @@ class Rover2026(ManipulatorModel):
     @property
     def init_qpos(self):
         return np.array([
-            -1.5,    # shoulder - Face forward
+            -1.58,    # shoulder - Face forward
             -1.2,   # link 1 - Leaning slightly back/up
-            1.0,   # link 2 - Angled
+            0.5,   # link 2 - Angled
             0.0,    # a4
             -1,    # a5
             -1.5     # a6

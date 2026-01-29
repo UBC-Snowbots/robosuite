@@ -4,7 +4,7 @@
         <geom condim="4" contype="1" conaffinity="1" />
 
         <default class="arm_joint">
-            <joint type="hinge" limited="true"/>
+            <joint type="hinge" limited="true" damping="0.1"/>
         </default>
 
         <default class="collision">
@@ -40,8 +40,9 @@
 
             <body name="a1_shoulder_base" pos="0.0875 0.17 0.0381" quat="-1 0 0 0">
                 <joint name="shoulder_joint" class="arm_joint" axis="0 0 1" range="-10 10" />
-                <geom class="collision" mesh="a1_shoulder_base" />
-                <geom class="visual" mesh="a1_shoulder_base"/>
+                <!-- Disabled collision on shoulder to prevent collision with pedestal mount -->
+                <geom class="collision" mesh="a1_shoulder_base" contype="0" conaffinity="0"/>
+                <geom class="visual" mesh="a1_shoulder_base" contype="0" conaffinity="0"/>
                 <inertial
                     pos="0.00027861641831084 -0.0233439437845335 0.0413589730530282"
                     mass="1.2159845169735"
@@ -67,8 +68,9 @@
 
                         <body name="a4_link2" pos="0.0497860905660309 0.148506406755493 0.186703382508224" quat="0.658 -0.256 -0.658 0.256">
                             <joint name="a4_rotation" class="arm_joint" axis="-1 0 0" range="-1.57 1.57" />
-                            <geom class="collision" mesh="a4_link2"/>
-                            <geom class="visual" mesh="a4_link2"/>
+                            <!-- Disabled collision to prevent self-collision with wrist -->
+                            <geom class="collision" mesh="a4_link2" contype="0" conaffinity="0"/>
+                            <geom class="visual" mesh="a4_link2" contype="0" conaffinity="0"/>
                             <inertial
                                 pos="0.0859436753269209 0.000520432616544109 -0.000231377005323458"
                                 mass="1.69468727862981"
@@ -76,8 +78,9 @@
 
                             <body name="a5_internal_upright" pos="0.241736998075445 0 0.0240007334588877" quat="0.658 0.256 0.658 -0.256">
                                 <joint name="a5_rotation" class="arm_joint" axis="1 0 0" range="-3.14 3.14" />
-                                <geom class="collision" mesh="a5_internal_upright"/>
-                                <geom class="visual" mesh="a5_internal_upright"/>
+                                <!-- Disabled collision to prevent self-collision with wrist -->
+                                <geom class="collision" mesh="a5_internal_upright" contype="0" conaffinity="0"/>
+                                <geom class="visual" mesh="a5_internal_upright" contype="0" conaffinity="0"/>
                                 <inertial
                                     pos="0.0248892665074707 0.00880117848885809 0.00583694857701647"
                                     mass="0.167323738643551"
@@ -85,8 +88,9 @@
 
                                 <body name="a6_EE_holder" pos="0.0249999999999973 0.0872905492585429 0.0572248321024004" quat="0.650 -0.276 -0.650 0.276">
                                     <joint name="a6_rotation" type="hinge" axis="-1 0 0" limited="false" />
-                                    <geom class="collision" mesh="a6_EE_holder"/>
-                                    <geom class="visual" mesh="a6_EE_holder"/>
+                                    <!-- Disabled collision to prevent self-collision with wrist -->
+                                    <geom class="collision" mesh="a6_EE_holder" contype="0" conaffinity="0"/>
+                                    <geom class="visual" mesh="a6_EE_holder" contype="0" conaffinity="0"/>
                                     <inertial
                                         pos="-0.0339647464842324 0.000122037593266067 0.000177794121861106"
                                         mass="0.378687643103429"
@@ -118,11 +122,11 @@
     </contact>
 
     <actuator>
-        <motor name="shoulder_joint" joint="shoulder_joint" ctrllimited="true" ctrlrange="-100.0 100.0" gear="1"/>
-        <motor name="link_1_joint" joint="link_1_joint" ctrllimited="true" ctrlrange="-100.0 100.0" gear="1"/>
-        <motor name="link1_link2" joint="link1_link2" ctrllimited="true" ctrlrange="-100.0 100.0" gear="1"/>
-        <motor name="a4_rotation" joint="a4_rotation" ctrllimited="true" ctrlrange="-100.0 100.0" gear="1"/>
-        <motor name="a5_rotation" joint="a5_rotation" ctrllimited="true" ctrlrange="-100.0 100.0" gear="80"/>
-        <motor name="a6_rotation" joint="a6_rotation" ctrllimited="true" ctrlrange="-100.0 100.0" gear="100"/>
+        <motor name="shoulder_joint" joint="shoulder_joint" ctrllimited="true" ctrlrange="-87.0 87.0" gear="1"/>
+        <motor name="link_1_joint" joint="link_1_joint" ctrllimited="true" ctrlrange="-87.0 87.0" gear="1"/>
+        <motor name="link1_link2" joint="link1_link2" ctrllimited="true" ctrlrange="-87.0 87.0" gear="1"/>
+        <motor name="a4_rotation" joint="a4_rotation" ctrllimited="true" ctrlrange="-87.0 87.0" gear="1"/>
+        <motor name="a5_rotation" joint="a5_rotation" ctrllimited="true" ctrlrange="-12.0 12.0" gear="1"/>
+        <motor name="a6_rotation" joint="a6_rotation" ctrllimited="true" ctrlrange="-12.0 12.0" gear="1"/>
     </actuator>
 </mujoco>

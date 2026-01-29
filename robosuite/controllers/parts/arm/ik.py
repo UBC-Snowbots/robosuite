@@ -26,7 +26,7 @@ from robosuite.utils.control_utils import *
 from robosuite.utils.ik_utils import IKSolver, get_nullspace_gains
 
 # Dict of supported ik robots
-SUPPORTED_IK_ROBOTS = {"Baxter", "Sawyer", "Panda", "GR1FixedLowerBody"}
+SUPPORTED_IK_ROBOTS = {"Baxter", "Sawyer", "Panda", "GR1FixedLowerBody", "Rover2025", "Rover2026"}
 
 
 class InverseKinematicsController(JointPositionController):
