@@ -18,6 +18,7 @@ from .xml_objects import (
     PlateWithHoleObject,
     DoorObject,
 )
+from .simple_keyboard import SimpleKeyboardObject
 from .primitive import *
 from .composite import *
 from .composite_body import *

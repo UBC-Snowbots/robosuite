@@ -1,0 +1,171 @@
+<mujoco model="simple_keyboard">
+  <asset>
+    <!-- Base plate material (dark gray) -->
+    <material name="keyboard_base_mat" rgba="0.2 0.2 0.2 1" specular="0.3" shininess="0.5"/>
+    <!-- Default key material (white) -->
+    <material name="key_mat" rgba="1.0 1.0 1.0 1" specular="0.4" shininess="0.6"/>
+    <!-- Colored key materials for visual distinction -->
+    <material name="key_red_mat" rgba="0.9 0.2 0.2 1" specular="0.4" shininess="0.6"/>
+    <material name="key_green_mat" rgba="0.2 0.9 0.2 1" specular="0.4" shininess="0.6"/>
+    <material name="key_blue_mat" rgba="0.2 0.2 0.9 1" specular="0.4" shininess="0.6"/>
+    <material name="key_yellow_mat" rgba="0.9 0.9 0.2 1" specular="0.4" shininess="0.6"/>
+    <material name="key_gray_mat" rgba="0.6 0.6 0.6 1" specular="0.4" shininess="0.6"/>
+  </asset>
+
+  <worldbody>
+    <body>
+      <body name="object">
+        <!--
+          Keyboard layout (4 rows x 3 cols, matching URDF key_names):
+          Key size: 0.1 x 0.1 x 0.001m with small gaps between keys.
+
+          Row/Col mapping (from URDF):
+            index 0:  row=0, col=0 -> none_0
+            index 1:  row=0, col=1 -> yaw_pos
+            index 2:  row=0, col=2 -> yaw_neg
+            index 3:  row=1, col=0 -> z_neg
+            index 4:  row=1, col=1 -> x_pos
+            index 5:  row=1, col=2 -> z_pos
+            index 6:  row=2, col=0 -> y_pos
+            index 7:  row=2, col=1 -> x_neg
+            index 8:  row=2, col=2 -> y_neg
+            index 9:  row=3, col=0 -> none_9
+            index 10: row=3, col=1 -> open_gripper
+            index 11: row=3, col=2 -> close_gripper
+
+          Origin at center of keyboard.
+          Total size: 0.4 x 0.3 x 0.001
+          Key half-sizes: 0.048 x 0.048 x 0.0005 (with 0.002m gap between keys)
+        -->
+
+        <!-- Base plate (slightly larger than all keys combined) -->
+        <geom name="keyboard_base" type="box"
+              size="0.21 0.16 0.002"
+              pos="0 0 -0.002"
+              material="keyboard_base_mat"
+              group="0" condim="4"
+              solimp="0.998 0.998 0.001" solref="0.001 1"
+              friction="0.95 0.3 0.1"/>
+
+        <!-- Row 0: none_0, yaw_pos, yaw_neg -->
+        <geom name="key_none_0" type="box"
+              size="0.048 0.048 0.0005"
+              pos="0.15 0.1 0"
+              material="key_gray_mat"
+              group="0" condim="4"
+              solimp="0.998 0.998 0.001" solref="0.001 1"
+              friction="0.95 0.3 0.1"/>
+
+        <geom name="key_yaw_pos" type="box"
+              size="0.048 0.048 0.0005"
+              pos="0.15 0 0"
+              material="key_blue_mat"
+              group="0" condim="4"
+              solimp="0.998 0.998 0.001" solref="0.001 1"
+              friction="0.95 0.3 0.1"/>
+
+        <geom name="key_yaw_neg" type="box"
+              size="0.048 0.048 0.0005"
+              pos="0.15 -0.1 0"
+              material="key_blue_mat"
+              group="0" condim="4"
+              solimp="0.998 0.998 0.001" solref="0.001 1"
+              friction="0.95 0.3 0.1"/>
+
+        <!-- Row 1: z_neg, x_pos, z_pos -->
+        <geom name="key_z_neg" type="box"
+              size="0.048 0.048 0.0005"
+              pos="0.05 0.1 0"
+              material="key_green_mat"
+              group="0" condim="4"
+              solimp="0.998 0.998 0.001" solref="0.001 1"
+              friction="0.95 0.3 0.1"/>
+
+        <geom name="key_x_pos" type="box"
+              size="0.048 0.048 0.0005"
+              pos="0.05 0 0"
+              material="key_red_mat"
+              group="0" condim="4"
+              solimp="0.998 0.998 0.001" solref="0.001 1"
+              friction="0.95 0.3 0.1"/>
+
+        <geom name="key_z_pos" type="box"
+              size="0.048 0.048 0.0005"
+              pos="0.05 -0.1 0"
+              material="key_green_mat"
+              group="0" condim="4"
+              solimp="0.998 0.998 0.001" solref="0.001 1"
+              friction="0.95 0.3 0.1"/>
+
+        <!-- Row 2: y_pos, x_neg, y_neg -->
+        <geom name="key_y_pos" type="box"
+              size="0.048 0.048 0.0005"
+              pos="-0.05 0.1 0"
+              material="key_yellow_mat"
+              group="0" condim="4"
+              solimp="0.998 0.998 0.001" solref="0.001 1"
+              friction="0.95 0.3 0.1"/>
+
+        <geom name="key_x_neg" type="box"
+              size="0.048 0.048 0.0005"
+              pos="-0.05 0 0"
+              material="key_red_mat"
+              group="0" condim="4"
+              solimp="0.998 0.998 0.001" solref="0.001 1"
+              friction="0.95 0.3 0.1"/>
+
+        <geom name="key_y_neg" type="box"
+              size="0.048 0.048 0.0005"
+              pos="-0.05 -0.1 0"
+              material="key_yellow_mat"
+              group="0" condim="4"
+              solimp="0.998 0.998 0.001" solref="0.001 1"
+              friction="0.95 0.3 0.1"/>
+
+        <!-- Row 3: none_9, open_gripper, close_gripper -->
+        <geom name="key_none_9" type="box"
+              size="0.048 0.048 0.0005"
+              pos="-0.15 0.1 0"
+              material="key_gray_mat"
+              group="0" condim="4"
+              solimp="0.998 0.998 0.001" solref="0.001 1"
+              friction="0.95 0.3 0.1"/>
+
+        <geom name="key_open_gripper" type="box"
+              size="0.048 0.048 0.0005"
+              pos="-0.15 0 0"
+              material="key_mat"
+              group="0" condim="4"
+              solimp="0.998 0.998 0.001" solref="0.001 1"
+              friction="0.95 0.3 0.1"/>
+
+        <geom name="key_close_gripper" type="box"
+              size="0.048 0.048 0.0005"
+              pos="-0.15 -0.1 0"
+              material="key_mat"
+              group="0" condim="4"
+              solimp="0.998 0.998 0.001" solref="0.001 1"
+              friction="0.95 0.3 0.1"/>
+
+        <!-- Contact sites on top of each key (for detecting stick_tip presses) -->
+        <site name="key_none_0_site" pos="0.15 0.1 0.0005" size="0.001" rgba="0 0 0 0"/>
+        <site name="key_yaw_pos_site" pos="0.15 0 0.0005" size="0.001" rgba="0 0 0 0"/>
+        <site name="key_yaw_neg_site" pos="0.15 -0.1 0.0005" size="0.001" rgba="0 0 0 0"/>
+        <site name="key_z_neg_site" pos="0.05 0.1 0.0005" size="0.001" rgba="0 0 0 0"/>
+        <site name="key_x_pos_site" pos="0.05 0 0.0005" size="0.001" rgba="0 0 0 0"/>
+        <site name="key_z_pos_site" pos="0.05 -0.1 0.0005" size="0.001" rgba="0 0 0 0"/>
+        <site name="key_y_pos_site" pos="-0.05 0.1 0.0005" size="0.001" rgba="0 0 0 0"/>
+        <site name="key_x_neg_site" pos="-0.05 0 0.0005" size="0.001" rgba="0 0 0 0"/>
+        <site name="key_y_neg_site" pos="-0.05 -0.1 0.0005" size="0.001" rgba="0 0 0 0"/>
+        <site name="key_none_9_site" pos="-0.15 0.1 0.0005" size="0.001" rgba="0 0 0 0"/>
+        <site name="key_open_gripper_site" pos="-0.15 0 0.0005" size="0.001" rgba="0 0 0 0"/>
+        <site name="key_close_gripper_site" pos="-0.15 -0.1 0.0005" size="0.001" rgba="0 0 0 0"/>
+      </body>
+
+      <!-- Required sites for MujocoXMLObject -->
+      <site name="bottom_site" pos="0 0 -0.004" size="0.001" rgba="0 0 0 0"/>
+      <site name="top_site" pos="0 0 0.0005" size="0.001" rgba="0 0 0 0"/>
+      <site name="horizontal_radius_site" pos="0.21 0.16 0" size="0.001" rgba="0 0 0 0"/>
+    </body>
+  </worldbody>
+</mujoco>

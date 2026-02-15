@@ -24,7 +24,7 @@ class Rover2026(ManipulatorModel):
 
     @property
     def default_gripper(self):
-        return {"right": "Rover2026Gripper"}
+        return {"right": "StickClickerGripper"}
 
     @property
     def default_controller_config(self):
