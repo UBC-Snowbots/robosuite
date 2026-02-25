@@ -155,7 +155,7 @@ class Type(ManipulationEnv):
         super()._setup_references()
 
         # Keyboard body
-        self.keyboard_body_id = self.sim.model.body_name2id(self.keyboard.root_body)
+        self.keyboard_body_id = self.sim.model.body_name2id("keyboard_main")
 
         # Map each key name to its geom ID for fast contact lookup
         self.key_geom_ids = {}

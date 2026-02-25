@@ -1,171 +1,262 @@
 <mujoco model="simple_keyboard">
-  <asset>
-    <!-- Base plate material (dark gray) -->
-    <material name="keyboard_base_mat" rgba="0.2 0.2 0.2 1" specular="0.3" shininess="0.5"/>
-    <!-- Default key material (white) -->
-    <material name="key_mat" rgba="1.0 1.0 1.0 1" specular="0.4" shininess="0.6"/>
-    <!-- Colored key materials for visual distinction -->
-    <material name="key_red_mat" rgba="0.9 0.2 0.2 1" specular="0.4" shininess="0.6"/>
-    <material name="key_green_mat" rgba="0.2 0.9 0.2 1" specular="0.4" shininess="0.6"/>
-    <material name="key_blue_mat" rgba="0.2 0.2 0.9 1" specular="0.4" shininess="0.6"/>
-    <material name="key_yellow_mat" rgba="0.9 0.9 0.2 1" specular="0.4" shininess="0.6"/>
-    <material name="key_gray_mat" rgba="0.6 0.6 0.6 1" specular="0.4" shininess="0.6"/>
-  </asset>
-
   <worldbody>
     <body>
       <body name="object">
         <!--
-          Keyboard layout (4 rows x 3 cols, matching URDF key_names):
-          Key size: 0.1 x 0.1 x 0.001m with small gaps between keys.
+          60-key keyboard (standard 60% QWERTY layout).
+          Key pitch: 19mm center-to-center.
+          1u keycap: 16mm x 16mm x 8mm (half 0.008 0.008 0.004).
 
-          Row/Col mapping (from URDF):
-            index 0:  row=0, col=0 -> none_0
-            index 1:  row=0, col=1 -> yaw_pos
-            index 2:  row=0, col=2 -> yaw_neg
-            index 3:  row=1, col=0 -> z_neg
-            index 4:  row=1, col=1 -> x_pos
-            index 5:  row=1, col=2 -> z_pos
-            index 6:  row=2, col=0 -> y_pos
-            index 7:  row=2, col=1 -> x_neg
-            index 8:  row=2, col=2 -> y_neg
-            index 9:  row=3, col=0 -> none_9
-            index 10: row=3, col=1 -> open_gripper
-            index 11: row=3, col=2 -> close_gripper
+          Rows along X (back +X → front −X):
+            Row 0 (numbers):  X = +0.038   14 keys
+            Row 1 (QWERTY):   X = +0.019   14 keys
+            Row 2 (home):     X =  0.000   13 keys
+            Row 3 (bottom):   X = −0.019   12 keys
+            Row 4 (space):    X = −0.038    7 keys (space bar wide)
 
-          Origin at center of keyboard.
-          Total size: 0.4 x 0.3 x 0.001
-          Key half-sizes: 0.048 x 0.048 x 0.0005 (with 0.002m gap between keys)
+          Columns along Y (col 0 at Y = −0.1235, step +0.019):
+            Col i:  Y = −0.1235 + i * 0.019
+
+          12 control keys are colour-coded; all others are dark gray.
+          Control-key mapping (real key → function):
+            Q→none_0  W→x_pos  E→none_9
+            A→y_pos   S→x_neg  D→y_neg
+            U→yaw_pos J→yaw_neg
+            O→open_gripper  P→close_gripper
+            ;→z_pos   .→z_neg
         -->
 
-        <!-- Base plate (slightly larger than all keys combined) -->
-        <geom name="keyboard_base" type="box"
-              size="0.21 0.16 0.002"
-              pos="0 0 -0.002"
-              material="keyboard_base_mat"
+        <!-- ═══ Base plate ════════════════════════════════════════════ -->
+        <geom name="base" type="box"
+              size="0.058 0.142 0.003"
+              pos="0 0 -0.003"
+              rgba="0.12 0.12 0.12 1"
               group="0" condim="4"
               solimp="0.998 0.998 0.001" solref="0.001 1"
               friction="0.95 0.3 0.1"/>
 
-        <!-- Row 0: none_0, yaw_pos, yaw_neg -->
-        <geom name="key_none_0" type="box"
-              size="0.048 0.048 0.0005"
-              pos="0.15 0.1 0"
-              material="key_gray_mat"
-              group="0" condim="4"
-              solimp="0.998 0.998 0.001" solref="0.001 1"
-              friction="0.95 0.3 0.1"/>
+        <!-- ═══ Row 0 — Number row (X = +0.038, 14 keys) ════════════ -->
+        <geom name="key_esc" type="box" size="0.008 0.008 0.004"
+              pos="0.038 -0.1235 0.001" rgba="0.35 0.35 0.35 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_1" type="box" size="0.008 0.008 0.004"
+              pos="0.038 -0.1045 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_2" type="box" size="0.008 0.008 0.004"
+              pos="0.038 -0.0855 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_3" type="box" size="0.008 0.008 0.004"
+              pos="0.038 -0.0665 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_4" type="box" size="0.008 0.008 0.004"
+              pos="0.038 -0.0475 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_5" type="box" size="0.008 0.008 0.004"
+              pos="0.038 -0.0285 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_6" type="box" size="0.008 0.008 0.004"
+              pos="0.038 -0.0095 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_7" type="box" size="0.008 0.008 0.004"
+              pos="0.038 0.0095 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_8" type="box" size="0.008 0.008 0.004"
+              pos="0.038 0.0285 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_9" type="box" size="0.008 0.008 0.004"
+              pos="0.038 0.0475 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_0" type="box" size="0.008 0.008 0.004"
+              pos="0.038 0.0665 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_minus" type="box" size="0.008 0.008 0.004"
+              pos="0.038 0.0855 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_equal" type="box" size="0.008 0.008 0.004"
+              pos="0.038 0.1045 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_bksp" type="box" size="0.008 0.008 0.004"
+              pos="0.038 0.1235 0.001" rgba="0.35 0.35 0.35 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
 
-        <geom name="key_yaw_pos" type="box"
-              size="0.048 0.048 0.0005"
-              pos="0.15 0 0"
-              material="key_blue_mat"
-              group="0" condim="4"
-              solimp="0.998 0.998 0.001" solref="0.001 1"
-              friction="0.95 0.3 0.1"/>
+        <!-- ═══ Row 1 — QWERTY row (X = +0.019, 14 keys) ═══════════ -->
+        <geom name="key_tab" type="box" size="0.008 0.008 0.004"
+              pos="0.019 -0.1235 0.001" rgba="0.35 0.35 0.35 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <!-- Q = none_0 (gray) -->
+        <geom name="key_none_0" type="box" size="0.008 0.008 0.004"
+              pos="0.019 -0.1045 0.001" rgba="0.55 0.55 0.55 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <!-- W = x_pos (red) -->
+        <geom name="key_x_pos" type="box" size="0.008 0.008 0.004"
+              pos="0.019 -0.0855 0.001" rgba="0.9 0.2 0.2 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <!-- E = none_9 (light gray) -->
+        <geom name="key_none_9" type="box" size="0.008 0.008 0.004"
+              pos="0.019 -0.0665 0.001" rgba="0.65 0.65 0.65 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_r" type="box" size="0.008 0.008 0.004"
+              pos="0.019 -0.0475 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_t" type="box" size="0.008 0.008 0.004"
+              pos="0.019 -0.0285 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_y" type="box" size="0.008 0.008 0.004"
+              pos="0.019 -0.0095 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <!-- U = yaw_pos (blue) -->
+        <geom name="key_yaw_pos" type="box" size="0.008 0.008 0.004"
+              pos="0.019 0.0095 0.001" rgba="0.3 0.3 0.9 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_i" type="box" size="0.008 0.008 0.004"
+              pos="0.019 0.0285 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <!-- O = open_gripper (white) -->
+        <geom name="key_open_gripper" type="box" size="0.008 0.008 0.004"
+              pos="0.019 0.0475 0.001" rgba="0.95 0.95 0.95 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <!-- P = close_gripper (lavender) -->
+        <geom name="key_close_gripper" type="box" size="0.008 0.008 0.004"
+              pos="0.019 0.0665 0.001" rgba="0.75 0.70 0.90 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_lbracket" type="box" size="0.008 0.008 0.004"
+              pos="0.019 0.0855 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_rbracket" type="box" size="0.008 0.008 0.004"
+              pos="0.019 0.1045 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_backslash" type="box" size="0.008 0.008 0.004"
+              pos="0.019 0.1235 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
 
-        <geom name="key_yaw_neg" type="box"
-              size="0.048 0.048 0.0005"
-              pos="0.15 -0.1 0"
-              material="key_blue_mat"
-              group="0" condim="4"
-              solimp="0.998 0.998 0.001" solref="0.001 1"
-              friction="0.95 0.3 0.1"/>
+        <!-- ═══ Row 2 — Home row (X = 0.000, 13 keys) ══════════════ -->
+        <geom name="key_caps" type="box" size="0.008 0.008 0.004"
+              pos="0.0 -0.1235 0.001" rgba="0.35 0.35 0.35 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <!-- A = y_pos (yellow) -->
+        <geom name="key_y_pos" type="box" size="0.008 0.008 0.004"
+              pos="0.0 -0.1045 0.001" rgba="0.9 0.9 0.2 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <!-- S = x_neg (salmon) -->
+        <geom name="key_x_neg" type="box" size="0.008 0.008 0.004"
+              pos="0.0 -0.0855 0.001" rgba="0.9 0.4 0.4 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <!-- D = y_neg (gold) -->
+        <geom name="key_y_neg" type="box" size="0.008 0.008 0.004"
+              pos="0.0 -0.0665 0.001" rgba="1.0 0.8 0.2 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_f" type="box" size="0.008 0.008 0.004"
+              pos="0.0 -0.0475 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_g" type="box" size="0.008 0.008 0.004"
+              pos="0.0 -0.0285 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_h" type="box" size="0.008 0.008 0.004"
+              pos="0.0 -0.0095 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <!-- J = yaw_neg (light blue) -->
+        <geom name="key_yaw_neg" type="box" size="0.008 0.008 0.004"
+              pos="0.0 0.0095 0.001" rgba="0.5 0.5 1.0 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_k" type="box" size="0.008 0.008 0.004"
+              pos="0.0 0.0285 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_l" type="box" size="0.008 0.008 0.004"
+              pos="0.0 0.0475 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <!-- ; = z_pos (mint green) -->
+        <geom name="key_z_pos" type="box" size="0.008 0.008 0.004"
+              pos="0.0 0.0665 0.001" rgba="0.2 0.9 0.5 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_quote" type="box" size="0.008 0.008 0.004"
+              pos="0.0 0.0855 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_enter" type="box" size="0.008 0.008 0.004"
+              pos="0.0 0.1045 0.001" rgba="0.35 0.35 0.35 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
 
-        <!-- Row 1: z_neg, x_pos, z_pos -->
-        <geom name="key_z_neg" type="box"
-              size="0.048 0.048 0.0005"
-              pos="0.05 0.1 0"
-              material="key_green_mat"
-              group="0" condim="4"
-              solimp="0.998 0.998 0.001" solref="0.001 1"
-              friction="0.95 0.3 0.1"/>
+        <!-- ═══ Row 3 — Bottom row (X = −0.019, 12 keys) ═══════════ -->
+        <geom name="key_lshift" type="box" size="0.008 0.008 0.004"
+              pos="-0.019 -0.1235 0.001" rgba="0.35 0.35 0.35 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_z" type="box" size="0.008 0.008 0.004"
+              pos="-0.019 -0.1045 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_x" type="box" size="0.008 0.008 0.004"
+              pos="-0.019 -0.0855 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_c" type="box" size="0.008 0.008 0.004"
+              pos="-0.019 -0.0665 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_v" type="box" size="0.008 0.008 0.004"
+              pos="-0.019 -0.0475 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_b" type="box" size="0.008 0.008 0.004"
+              pos="-0.019 -0.0285 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_n" type="box" size="0.008 0.008 0.004"
+              pos="-0.019 -0.0095 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_m" type="box" size="0.008 0.008 0.004"
+              pos="-0.019 0.0095 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_comma" type="box" size="0.008 0.008 0.004"
+              pos="-0.019 0.0285 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <!-- . = z_neg (green) -->
+        <geom name="key_z_neg" type="box" size="0.008 0.008 0.004"
+              pos="-0.019 0.0475 0.001" rgba="0.2 0.7 0.2 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_slash" type="box" size="0.008 0.008 0.004"
+              pos="-0.019 0.0665 0.001" rgba="0.30 0.30 0.30 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_rshift" type="box" size="0.008 0.008 0.004"
+              pos="-0.019 0.0855 0.001" rgba="0.35 0.35 0.35 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
 
-        <geom name="key_x_pos" type="box"
-              size="0.048 0.048 0.0005"
-              pos="0.05 0 0"
-              material="key_red_mat"
-              group="0" condim="4"
-              solimp="0.998 0.998 0.001" solref="0.001 1"
-              friction="0.95 0.3 0.1"/>
+        <!-- ═══ Row 4 — Space row (X = −0.038, 7 keys) ═════════════ -->
+        <geom name="key_lctrl" type="box" size="0.008 0.008 0.004"
+              pos="-0.038 -0.1235 0.001" rgba="0.35 0.35 0.35 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_win" type="box" size="0.008 0.008 0.004"
+              pos="-0.038 -0.1045 0.001" rgba="0.35 0.35 0.35 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_lalt" type="box" size="0.008 0.008 0.004"
+              pos="-0.038 -0.0855 0.001" rgba="0.35 0.35 0.35 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <!-- Space bar: 6u wide, centered at Y=0 -->
+        <geom name="key_space" type="box" size="0.008 0.055 0.004"
+              pos="-0.038 0.0 0.001" rgba="0.33 0.33 0.33 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_ralt" type="box" size="0.008 0.008 0.004"
+              pos="-0.038 0.0855 0.001" rgba="0.35 0.35 0.35 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_menu" type="box" size="0.008 0.008 0.004"
+              pos="-0.038 0.1045 0.001" rgba="0.35 0.35 0.35 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
+        <geom name="key_rctrl" type="box" size="0.008 0.008 0.004"
+              pos="-0.038 0.1235 0.001" rgba="0.35 0.35 0.35 1"
+              group="0" condim="4" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1"/>
 
-        <geom name="key_z_pos" type="box"
-              size="0.048 0.048 0.0005"
-              pos="0.05 -0.1 0"
-              material="key_green_mat"
-              group="0" condim="4"
-              solimp="0.998 0.998 0.001" solref="0.001 1"
-              friction="0.95 0.3 0.1"/>
-
-        <!-- Row 2: y_pos, x_neg, y_neg -->
-        <geom name="key_y_pos" type="box"
-              size="0.048 0.048 0.0005"
-              pos="-0.05 0.1 0"
-              material="key_yellow_mat"
-              group="0" condim="4"
-              solimp="0.998 0.998 0.001" solref="0.001 1"
-              friction="0.95 0.3 0.1"/>
-
-        <geom name="key_x_neg" type="box"
-              size="0.048 0.048 0.0005"
-              pos="-0.05 0 0"
-              material="key_red_mat"
-              group="0" condim="4"
-              solimp="0.998 0.998 0.001" solref="0.001 1"
-              friction="0.95 0.3 0.1"/>
-
-        <geom name="key_y_neg" type="box"
-              size="0.048 0.048 0.0005"
-              pos="-0.05 -0.1 0"
-              material="key_yellow_mat"
-              group="0" condim="4"
-              solimp="0.998 0.998 0.001" solref="0.001 1"
-              friction="0.95 0.3 0.1"/>
-
-        <!-- Row 3: none_9, open_gripper, close_gripper -->
-        <geom name="key_none_9" type="box"
-              size="0.048 0.048 0.0005"
-              pos="-0.15 0.1 0"
-              material="key_gray_mat"
-              group="0" condim="4"
-              solimp="0.998 0.998 0.001" solref="0.001 1"
-              friction="0.95 0.3 0.1"/>
-
-        <geom name="key_open_gripper" type="box"
-              size="0.048 0.048 0.0005"
-              pos="-0.15 0 0"
-              material="key_mat"
-              group="0" condim="4"
-              solimp="0.998 0.998 0.001" solref="0.001 1"
-              friction="0.95 0.3 0.1"/>
-
-        <geom name="key_close_gripper" type="box"
-              size="0.048 0.048 0.0005"
-              pos="-0.15 -0.1 0"
-              material="key_mat"
-              group="0" condim="4"
-              solimp="0.998 0.998 0.001" solref="0.001 1"
-              friction="0.95 0.3 0.1"/>
-
-        <!-- Contact sites on top of each key (for detecting stick_tip presses) -->
-        <site name="key_none_0_site" pos="0.15 0.1 0.0005" size="0.001" rgba="0 0 0 0"/>
-        <site name="key_yaw_pos_site" pos="0.15 0 0.0005" size="0.001" rgba="0 0 0 0"/>
-        <site name="key_yaw_neg_site" pos="0.15 -0.1 0.0005" size="0.001" rgba="0 0 0 0"/>
-        <site name="key_z_neg_site" pos="0.05 0.1 0.0005" size="0.001" rgba="0 0 0 0"/>
-        <site name="key_x_pos_site" pos="0.05 0 0.0005" size="0.001" rgba="0 0 0 0"/>
-        <site name="key_z_pos_site" pos="0.05 -0.1 0.0005" size="0.001" rgba="0 0 0 0"/>
-        <site name="key_y_pos_site" pos="-0.05 0.1 0.0005" size="0.001" rgba="0 0 0 0"/>
-        <site name="key_x_neg_site" pos="-0.05 0 0.0005" size="0.001" rgba="0 0 0 0"/>
-        <site name="key_y_neg_site" pos="-0.05 -0.1 0.0005" size="0.001" rgba="0 0 0 0"/>
-        <site name="key_none_9_site" pos="-0.15 0.1 0.0005" size="0.001" rgba="0 0 0 0"/>
-        <site name="key_open_gripper_site" pos="-0.15 0 0.0005" size="0.001" rgba="0 0 0 0"/>
-        <site name="key_close_gripper_site" pos="-0.15 -0.1 0.0005" size="0.001" rgba="0 0 0 0"/>
+        <!-- ═══ Contact sites on top of each control key ═══════════ -->
+        <site name="key_none_0_site"         pos="0.019 -0.1045 0.005" size="0.001" rgba="0 0 0 0"/>
+        <site name="key_x_pos_site"          pos="0.019 -0.0855 0.005" size="0.001" rgba="0 0 0 0"/>
+        <site name="key_none_9_site"         pos="0.019 -0.0665 0.005" size="0.001" rgba="0 0 0 0"/>
+        <site name="key_yaw_pos_site"        pos="0.019  0.0095 0.005" size="0.001" rgba="0 0 0 0"/>
+        <site name="key_open_gripper_site"   pos="0.019  0.0475 0.005" size="0.001" rgba="0 0 0 0"/>
+        <site name="key_close_gripper_site"  pos="0.019  0.0665 0.005" size="0.001" rgba="0 0 0 0"/>
+        <site name="key_y_pos_site"          pos="0.0   -0.1045 0.005" size="0.001" rgba="0 0 0 0"/>
+        <site name="key_x_neg_site"          pos="0.0   -0.0855 0.005" size="0.001" rgba="0 0 0 0"/>
+        <site name="key_y_neg_site"          pos="0.0   -0.0665 0.005" size="0.001" rgba="0 0 0 0"/>
+        <site name="key_yaw_neg_site"        pos="0.0    0.0095 0.005" size="0.001" rgba="0 0 0 0"/>
+        <site name="key_z_pos_site"          pos="0.0    0.0665 0.005" size="0.001" rgba="0 0 0 0"/>
+        <site name="key_z_neg_site"          pos="-0.019 0.0475 0.005" size="0.001" rgba="0 0 0 0"/>
       </body>
 
       <!-- Required sites for MujocoXMLObject -->
-      <site name="bottom_site" pos="0 0 -0.004" size="0.001" rgba="0 0 0 0"/>
-      <site name="top_site" pos="0 0 0.0005" size="0.001" rgba="0 0 0 0"/>
-      <site name="horizontal_radius_site" pos="0.21 0.16 0" size="0.001" rgba="0 0 0 0"/>
+      <site name="bottom_site" pos="0 0 -0.006" size="0.001" rgba="0 0 0 0"/>
+      <site name="top_site" pos="0 0 0.005" size="0.001" rgba="0 0 0 0"/>
+      <site name="horizontal_radius_site" pos="0.058 0.142 0" size="0.001" rgba="0 0 0 0"/>
     </body>
   </worldbody>
 </mujoco>

@@ -1,9 +1,10 @@
 """
 Simple Keyboard object for robosuite.
 
-A 4x3 grid of flat keys that can be pressed by the stick clicker gripper.
-Each key has a named collision geom so contact detection can identify which
-key was pressed.
+A 60-key (60%) QWERTY keyboard that can be pressed by the stick clicker
+gripper.  12 control keys are colour-coded; the remaining keys are dark gray
+decorative caps.  Each key is an individual collision geom so contact
+detection can identify which key was pressed.
 """
 
 from robosuite.models.objects import MujocoXMLObject
@@ -21,11 +22,13 @@ KEY_NAMES = [
 
 class SimpleKeyboardObject(MujocoXMLObject):
     """
-    A flat 4x3 keyboard with individually named key geoms for contact detection.
+    A 60-key (60%) QWERTY keyboard with individually named geoms.
 
-    The keyboard is meant to sit on a table surface. Each key is a thin box
-    with a unique geom name (e.g., "key_x_pos") so that collisions with the
-    stick clicker tip can be mapped back to a specific key.
+    The keyboard sits on a table surface.  60 keycap geoms are arranged in
+    5 rows at 19 mm pitch on a dark base plate.  The 12 control keys
+    (WASD, UJ, OP, QE, semicolon, period) are colour-coded; all other keys
+    are dark gray.  Collisions with the stick clicker tip can be mapped back
+    to a specific control key.
 
     No free joint — the keyboard is fixed in place once positioned.
     """
@@ -36,7 +39,7 @@ class SimpleKeyboardObject(MujocoXMLObject):
             name=name,
             joints=None,        # Fixed object — no free joint
             obj_type="all",
-            duplicate_collision_geoms=True,
+            duplicate_collision_geoms=False,
         )
 
     @property

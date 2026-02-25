@@ -38,8 +38,8 @@
                 mass="0.763817421365748"
                 diaginertia="0.00365550963890374 0.00157214217192498 0.00520465242815667"/>
 
-            <body name="a1_shoulder_base" pos="0.0875 0.17 0.0381" quat="-1 0 0 0">
-                <joint name="shoulder_joint" class="arm_joint" axis="0 0 1" range="-10 10" />
+            <body name="a1_shoulder_base" pos="0.0875 0.17 0.0381" quat="0 0 0 1">
+                <joint name="shoulder_joint" class="arm_joint" axis="0 0 1" range="-0.22 5.5" />
                 <!-- Disabled collision on shoulder to prevent collision with pedestal mount -->
                 <geom class="collision" mesh="a1_shoulder_base" contype="0" conaffinity="0"/>
                 <geom class="visual" mesh="a1_shoulder_base" contype="0" conaffinity="0"/>
@@ -49,7 +49,7 @@
                     diaginertia="0.00146671121305877 0.000864137178979533 0.00108466557650932"/>
 
                 <body name="a2_link_1" pos="0.002825 -0.045 0.075" quat="0.5 0.5 -0.5 -0.5">
-                    <joint name="link_1_joint" class="arm_joint" axis="0 0 1" range="-6.28 0" />
+                    <joint name="link_1_joint" class="arm_joint" axis="0 0 1" range="-3.14 0" />
                     <geom class="collision" mesh="a2_link_1"/>
                     <geom class="visual" mesh="a2_link_1"/>
                     <inertial
@@ -57,8 +57,8 @@
                         mass="2.37795713621316"
                         diaginertia="0.00258780670386834 0.0394251082116644 0.0405572027877698"/>
 
-                    <body name="a3_axis4_housing" pos="-0.500 0 -0.063039642892861" quat="0 0.7071 0 -0.7071">
-                        <joint name="link1_link2" class="arm_joint" axis="-1 0 0" range="-3.14 3.14"/>
+                    <body name="a3_axis4_housing" pos="-0.500 0 -0.063039642892861" quat="0.707107 0 0.707107 0">
+                        <joint name="link1_link2" class="arm_joint" axis="-1 0 0" range="0 3.14"/>
                         <geom class="collision" mesh="a3_axis4_housing" />
                         <geom class="visual" mesh="a3_axis4_housing"/>
                         <inertial
@@ -66,7 +66,7 @@
                             mass="0.405543595440366"
                             diaginertia="0.000697940268173563 0.000449834279179675 0.000430824953350791"/>
 
-                        <body name="a4_link2" pos="0.0497860905660309 0.148506406755493 0.186703382508224" quat="0.658 -0.256 -0.658 0.256">
+                        <body name="a4_link2" pos="0.0497860905660309 0.148506406755493 0.186703382508224" quat="0.667573 -0.233123 -0.667573 0.233123">
                             <joint name="a4_rotation" class="arm_joint" axis="-1 0 0" range="-1.57 1.57" />
                             <!-- Disabled collision to prevent self-collision with wrist -->
                             <geom class="collision" mesh="a4_link2" contype="0" conaffinity="0"/>
@@ -76,7 +76,7 @@
                                 mass="1.69468727862981"
                                 diaginertia="0.0014685385115831 0.00851214875637219 0.00918980958127426"/>
 
-                            <body name="a5_internal_upright" pos="0.241736998075445 0 0.0240007334588877" quat="0.658 0.256 0.658 -0.256">
+                            <body name="a5_internal_upright" pos="0.241736998075445 0 0.0240007334588877" quat="0.667573 0.233123 0.667573 -0.233123">
                                 <joint name="a5_rotation" class="arm_joint" axis="1 0 0" range="-3.14 3.14" />
                                 <!-- Disabled collision to prevent self-collision with wrist -->
                                 <geom class="collision" mesh="a5_internal_upright" contype="0" conaffinity="0"/>
@@ -86,7 +86,7 @@
                                     mass="0.167323738643551"
                                     diaginertia="0.000139240659778515 0.000151677157680944 0.000143582597351709"/>
 
-                                <body name="a6_EE_holder" pos="0.0249999999999973 0.0872905492585429 0.0572248321024004" quat="0.650 -0.276 -0.650 0.276">
+                                <body name="a6_EE_holder" pos="0.0249999999999973 0.0872905492585429 0.0572248321024004" quat="0.622145 -0.336059 -0.622145 0.336059">
                                     <joint name="a6_rotation" type="hinge" axis="-1 0 0" limited="false" />
                                     <!-- Disabled collision to prevent self-collision with wrist -->
                                     <geom class="collision" mesh="a6_EE_holder" contype="0" conaffinity="0"/>

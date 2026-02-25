@@ -24,7 +24,8 @@ class Rover2026(ManipulatorModel):
 
     @property
     def default_gripper(self):
-        return {"right": "StickClickerGripper"}
+        return {"right": "Rover2026Gripper"}
+        # return {"right": "StickClickerGripper"}
 
     @property
     def default_controller_config(self):
@@ -42,13 +43,14 @@ class Rover2026(ManipulatorModel):
     
     @property
     def init_qpos(self):
+        # Matches RViz/MoveIt initial_positions.yaml (dev_arm_moveit_config_v3)
         return np.array([
-            -1.58,    # shoulder - Face forward
-            -1.2,   # link 1 - Leaning slightly back/up
-            0.5,   # link 2 - Angled
-            0.0,    # a4
-            -1,    # a5
-            -1.5     # a6
+            1.0,    # shoulder_joint
+            -1.5,   # link_1_joint
+            1.5,    # link1_link2
+            0.5,    # a4_rotation
+            1.0,    # a5_rotation
+            0.3,    # a6_rotation
         ])
 
     @property
