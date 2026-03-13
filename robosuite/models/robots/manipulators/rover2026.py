@@ -20,37 +20,27 @@ class Rover2026(ManipulatorModel):
 
     @property
     def default_base(self):
-        return "RethinkMount"
+        return "NullMount"
 
     @property
     def default_gripper(self):
-        return {"right": "Rover2026Gripper"}
+        return {"right": "Rover2026Solenoid"}
         # return {"right": "StickClickerGripper"}
 
     @property
     def default_controller_config(self):
         return {"right": "default_rover2026"}
-    # @property
-    # def init_qpos(self):
-    #     return np.array([
-    #         1.57,   # shoulder_joint
-    #         -1.57,  # link_1_joint
-    #         1.57,   # link1_link2
-    #         0.0,    # a4_rotation
-    #         0.0,    # a5_rotation
-    #         0.0     # a6_rotation (fixed)
-    #     ])
     
     @property
     def init_qpos(self):
         # Matches RViz/MoveIt initial_positions.yaml (dev_arm_moveit_config_v3)
         return np.array([
-            1.0,    # shoulder_joint
-            -1.5,   # link_1_joint
-            1.5,    # link1_link2
-            0.5,    # a4_rotation
-            1.0,    # a5_rotation
-            0.3,    # a6_rotation
+            -1.57,    # shoulder_joint
+            -1.57,   # link_1_joint
+            0.9,    # link1_link2
+            0.0,    # a4_rotation
+            1.2,    # a5_rotation
+            0.0,    # a6_rotation
         ])
 
     @property

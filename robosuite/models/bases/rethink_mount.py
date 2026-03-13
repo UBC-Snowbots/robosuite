@@ -20,7 +20,7 @@ class RethinkMount(MountModel):
 
     @property
     def top_offset(self):
-        return np.array((0, 0, -0.01))
+        return np.array((0, 0, -0.11))
 
     @property
     def horizontal_radius(self):

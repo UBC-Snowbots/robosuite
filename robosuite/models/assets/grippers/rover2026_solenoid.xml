@@ -1,0 +1,126 @@
+<mujoco model="rover2026_solenoid_model">
+    <default>
+        <joint limited="false" damping="5.0" armature="0.1" frictionloss="0.1" />
+        <geom condim="4" contype="1" conaffinity="1" />
+
+        <default class="collision">
+            <geom group="0" rgba="0.7 0.7 0.7 1" type="mesh" />
+        </default>
+
+        <default class="visual">
+            <geom group="1" material="default_material" type="mesh" />
+        </default>
+    </default>
+
+    <compiler angle="radian" eulerseq="xyz" />
+
+    <asset>
+        <material name="default_visual" rgba="0.7 0.7 0.7 1" />
+        <material name="default_material" rgba="0.7 0.7 0.7 1" />
+        <!-- Reuse existing flange mesh for visual continuity -->
+        <mesh name="base_ee" file="meshes/rover2025_gripper/Base-EE.stl" />
+    </asset>
+
+    <worldbody>
+        <!-- Attachment flange — mounted at right_hand body in robot.xml -->
+        <body name="base_ee" pos="0 0 0">
+            <site name="ft_frame" pos="0 0 0" size="0.01 0.01 0.01"
+                  rgba="1 0 0 1" type="sphere" group="1" />
+
+            <geom class="visual" mesh="base_ee" conaffinity="0" contype="0" />
+
+            <inertial pos="0 0 0.03" mass="0.25"
+                      diaginertia="0.0005 0.0005 0.0002" />
+
+            <!--
+                EEF camera: anchored to the flange, angled ~60 degrees downward
+                toward the actuator tip. Placeholder geometry — update pos/euler
+                once the physical bracket is designed.
+            -->
+            <camera name="eef_cam" pos="0.025 0 0.03"
+                    euler="-1.047 0 0" fovy="60" />
+
+            <!--
+                eef body: required by GripperModel — used as the EEF reference
+                frame (grip site, axis visualisations). Positioned at the
+                actuator tip rest location (retracted).
+            -->
+            <body name="eef" pos="0 0 0.075" quat="1 0 0 0">
+                <site name="grip_site" pos="0 0 0" size="0.01 0.01 0.01"
+                      rgba="1 0 0 0.5" type="sphere" group="1" />
+                <site name="ee_x" pos="0.1 0 0" size="0.005 .1"
+                      quat="0.707105 0 0.707108 0" rgba="1 0 0 0" type="cylinder" group="1" />
+                <site name="ee_y" pos="0 0.1 0" size="0.005 .1"
+                      quat="0.707105 0.707108 0 0" rgba="0 1 0 0" type="cylinder" group="1" />
+                <site name="ee_z" pos="0 0 0.1" size="0.005 .1"
+                      quat="1 0 0 0" rgba="0 0 1 0" type="cylinder" group="1" />
+                <site name="grip_site_cylinder" pos="0 0 0" size="0.005 10"
+                      rgba="0 1 0 0.3" type="cylinder" group="1" />
+            </body>
+
+            <!--
+                Solenoid actuator: slides along local Z (the pressing direction).
+                range 0.0 (retracted) to 0.04 m (extended, ~4 cm stroke).
+
+                Modelled as a motor + return spring (stiffness), which is the
+                physically correct representation of a spring-return solenoid:
+                  - De-energised (ctrl=0): spring pulls tip back to pos=0
+                  - Energised (ctrl=max): motor force overcomes spring, extends tip
+                No position servo needed — passive retraction is guaranteed.
+            -->
+            <body name="linear_actuator" pos="0 0 0.04">
+                <joint name="actuator_slide" type="slide" axis="0 0 1"
+                       range="0.0 0.04" limited="true"
+                       damping="200.0" stiffness="200.0" armature="0.1" />
+
+                <!-- Housing cylinder (visual only) -->
+                <geom name="actuator_housing" type="cylinder"
+                      size="0.008 0.015" pos="0 0 0"
+                      rgba="0.25 0.25 0.25 1"
+                      contype="0" conaffinity="0" group="1" />
+
+                <!-- Tip: active collision geom — cfrc_ext on this body = contact signal -->
+                <geom name="actuator_tip" type="cylinder"
+                      size="0.005 0.015" pos="0 0 0.025"
+                      rgba="0.1 0.1 0.1 1"
+                      contype="1" conaffinity="1" group="0" />
+
+                <!-- Site at the very end of the tip for the rangefinder -->
+                <site name="actuator_tip_site" pos="0 0 0.04"
+                      size="0.003" rgba="0 0 1 1" group="1" />
+
+                <inertial pos="0 0 0.02" mass="0.04"
+                          diaginertia="0.000005 0.000005 0.000002" />
+            </body>
+        </body>
+    </worldbody>
+
+    <actuator>
+        <!--
+            Motor actuator: ctrl=0 → de-energised, spring retracts tip to pos=0.
+                            ctrl=15 → energised, motor overcomes spring, extends tip.
+            Spring stiffness=200 N/m: at full extension (0.04m) spring force = 8N.
+            Motor force=15N > 8N spring, so the tip reaches the joint limit.
+            format_action() maps policy action ∈ [-1,1] to binary {0, 15}.
+        -->
+        <!--
+            Motor force must exceed spring force at full extension:
+            stiffness(200) × max_stroke(0.04m) = 8N → use 25N comfortably.
+            High joint damping(200) kills any kinematic-chain transients.
+        -->
+        <motor name="solenoid_actuator" joint="actuator_slide"
+               ctrllimited="true" ctrlrange="0 25" gear="1" />
+    </actuator>
+
+    <sensor>
+        <force   name="force_ee"        site="ft_frame" />
+        <torque  name="torque_ee"       site="ft_frame" />
+        <!--
+            Rangefinder: scalar distance from tip to first surface below.
+            cutoff=0.3 m covers the full keyboard-above range.
+            On real hardware this maps to the EEF camera depth channel
+            or is computed from actuator position + known keyboard height.
+        -->
+        <rangefinder name="eef_rangefinder" site="actuator_tip_site" cutoff="0.3" />
+    </sensor>
+</mujoco>

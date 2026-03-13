@@ -19,6 +19,7 @@ from .xarm7_gripper import XArm7Gripper
 # Rover additions
 from .rover2025_gripper import Rover2025Gripper
 from .rover2026_gripper import Rover2026Gripper
+from .rover2026_solenoid import Rover2026Solenoid
 from .stick import StickClickerGripper
 
 GRIPPER_MAPPING = {
@@ -39,6 +40,7 @@ GRIPPER_MAPPING = {
     "XArm7Gripper": XArm7Gripper,
     "Rover2025Gripper": Rover2025Gripper, # addition
     "Rover2026Gripper": Rover2026Gripper, # addition
+    "Rover2026Solenoid": Rover2026Solenoid, # addition
     "StickClickerGripper": StickClickerGripper, # addition
     None: NullGripper,
 }
