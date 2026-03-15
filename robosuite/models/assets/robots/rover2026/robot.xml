@@ -40,8 +40,7 @@
 
             <body name="a1_shoulder_base" pos="0.0875 0.17 0.0381" quat="0 0 0 1">
                 <joint name="shoulder_joint" class="arm_joint" axis="0 0 1" range="-3.14 3.14" />
-                <!-- Disabled collision on shoulder to prevent collision with pedestal mount -->
-                <geom class="collision" mesh="a1_shoulder_base" contype="0" conaffinity="0"/>
+                <geom class="collision" mesh="a1_shoulder_base"/>
                 <geom class="visual" mesh="a1_shoulder_base" contype="0" conaffinity="0"/>
                 <inertial
                     pos="0.00027861641831084 -0.0233439437845335 0.0413589730530282"
@@ -68,8 +67,7 @@
 
                         <body name="a4_link2" pos="0.0497860905660309 0.148506406755493 0.186703382508224" quat="0.667573 -0.233123 -0.667573 0.233123">
                             <joint name="a4_rotation" class="arm_joint" axis="-1 0 0" range="-1.57 3.14" />
-                            <!-- Disabled collision to prevent self-collision with wrist -->
-                            <geom class="collision" mesh="a4_link2" contype="0" conaffinity="0"/>
+                            <geom class="collision" mesh="a4_link2"/>
                             <geom class="visual" mesh="a4_link2" contype="0" conaffinity="0"/>
                             <inertial
                                 pos="0.0859436753269209 0.000520432616544109 -0.000231377005323458"
@@ -78,8 +76,7 @@
 
                             <body name="a5_internal_upright" pos="0.241736998075445 0 0.0240007334588877" quat="0.667573 0.233123 0.667573 -0.233123">
                                 <joint name="a5_rotation" class="arm_joint" axis="1 0 0" range="-3.14 3.14" />
-                                <!-- Disabled collision to prevent self-collision with wrist -->
-                                <geom class="collision" mesh="a5_internal_upright" contype="0" conaffinity="0"/>
+                                <geom class="collision" mesh="a5_internal_upright"/>
                                 <geom class="visual" mesh="a5_internal_upright" contype="0" conaffinity="0"/>
                                 <inertial
                                     pos="0.0248892665074707 0.00880117848885809 0.00583694857701647"
@@ -88,8 +85,7 @@
 
                                 <body name="a6_EE_holder" pos="0.0249999999999973 0.0872905492585429 0.0572248321024004" quat="0.622145 -0.336059 -0.622145 0.336059">
                                     <joint name="a6_rotation" type="hinge" axis="-1 0 0" limited="false" />
-                                    <!-- Disabled collision to prevent self-collision with wrist -->
-                                    <geom class="collision" mesh="a6_EE_holder" contype="0" conaffinity="0"/>
+                                    <geom class="collision" mesh="a6_EE_holder"/>
                                     <geom class="visual" mesh="a6_EE_holder" contype="0" conaffinity="0"/>
                                     <inertial
                                         pos="-0.0339647464842324 0.000122037593266067 0.000177794121861106"
@@ -113,6 +109,7 @@
     </worldbody>
 
     <contact>
+        <!-- Base / shoulder excludes -->
         <exclude body1="base_link" body2="a1_shoulder_base"/>
         <exclude body1="a1_shoulder_base" body2="a2_link_1"/>
         <exclude body1="base_link" body2="a2_link_1"/>
@@ -120,6 +117,12 @@
         <exclude body1="base_link" body2="a4_link2"/>
         <exclude body1="a1_shoulder_base" body2="a3_axis4_housing"/>
         <exclude body1="a1_shoulder_base" body2="a4_link2"/>
+        <!-- Wrist self-collision excludes (adjacent links that overlap geometrically) -->
+        <exclude body1="a3_axis4_housing" body2="a4_link2"/>
+        <exclude body1="a4_link2" body2="a5_internal_upright"/>
+        <exclude body1="a5_internal_upright" body2="a6_EE_holder"/>
+        <exclude body1="a4_link2" body2="a6_EE_holder"/>
+        <exclude body1="a3_axis4_housing" body2="a5_internal_upright"/>
     </contact>
 
     <actuator>

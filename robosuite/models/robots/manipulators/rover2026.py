@@ -39,9 +39,19 @@ class Rover2026(ManipulatorModel):
             -1.57,   # link_1_joint
             0.9,    # link1_link2
             0.0,    # a4_rotation
-            1.2,    # a5_rotation
+            1.87,    # a5_rotation
             0.0,    # a6_rotation
         ])
+    
+    """
+    - -2.3447904899721523
+    - -1.3109592432033523
+    - 0.4222493749261091
+    - -0.01067216530286909
+    - 1.7332384266110858
+    - 0.7774125116998901
+    - 0.04076263081598325
+"""
 
     @property
     def base_xpos_offset(self):
